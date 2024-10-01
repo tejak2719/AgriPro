@@ -1,0 +1,110 @@
+
+# import requests
+# from gtts import gTTS
+
+# # Your Gooey.AI API key
+# API_KEY = "sk-BJ6gi3JxtmJUi9Lwis1Z08AXeechUXf5RuWapozsSOAsMmCB"
+
+# # API URL for lip sync
+# API_URL = "https://api.gooey.ai/v2/video-bots"
+
+# def text_to_speech(text, output_audio_path):
+#     """Convert text to speech using gTTS and save as an mp3."""
+#     tts = gTTS(text=text, lang='en')
+#     tts.save(output_audio_path)
+#     print(f"Text-to-Speech saved at {output_audio_path}")
+
+# def perform_lipsync(image_path, audio_path, output_video_path):
+#     """Use Gooey.AI API to perform lip sync with provided image and audio."""
+#     headers = {
+#         "Authorization": f"Bearer {API_KEY}"
+#     }
+    
+#     # JSON payload (could be empty or contain some metadata)
+#     json_data = {}
+
+#     files = {
+#         'image': open(image_path, 'rb'),
+#         'audio': open(audio_path, 'rb'),
+#     }
+    
+#     # Sending both files and JSON data
+#     response = requests.post(API_URL, headers=headers, files=files, data=json_data)
+    
+#     if response.status_code == 200:
+#         # Get the generated video URL
+#         video_url = response.json().get('output_video')
+#         # Download and save the video
+#         video_data = requests.get(video_url).content
+#         with open(output_video_path, 'wb') as f:
+#             f.write(video_data)
+#         print(f"Lip-sync video saved at {output_video_path}")
+#     else:
+#         print(f"Error {response.status_code}: {response.text}")
+
+# def main():
+#     # Define file paths
+#     input_text = "This is the text I want the face to speak"
+#     audio_output = "output_audio.mp3"
+#     image_path = "source_image.jpg"  # The image to perform lip sync on
+#     video_output = "output_video.mp4"
+
+#     # Convert text to speech
+#     text_to_speech(input_text, audio_output)
+    
+#     # Perform lip sync using Gooey.AI
+#     perform_lipsync(image_path, audio_output, video_output)
+
+# if __name__ == "__main__":
+#     main()
+# XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX
+#
+# import os
+# import requests
+
+# # Your Gooey.AI API key - hardcoded here
+# API_KEY = "sk-BJ6gi3JxtmJUi9Lwis1Z08AXeechUXf5RuWapozsSOAsMmCB"
+
+# # Function to call Gooey.AI LipSyncTTS API
+# def perform_lipsync_tts(text_prompt):
+#     # Payload for the API request
+#     payload = {
+#         "text_prompt": text_prompt,
+#         "tts_provider": "OPEN_AI",  # Change this if using a different TTS provider
+#         "elevenlabs_voice_name": None,
+#         "elevenlabs_voice_id": None,  # Replace with ElevenLabs voice ID if using that
+#         "elevenlabs_api_key": None,  # Add this if using ElevenLabs API
+#     }
+    
+#     # Make the API call
+#     response = requests.post(
+#         "https://api.gooey.ai/v2/LipsyncTTS",
+#         headers={
+#             "Authorization": "Bearer " + API_KEY,
+#         },
+#         json=payload,
+#     )
+    
+#     # Ensure the request was successful
+#     if response.ok:
+#         result = response.json()
+#         video_url = result['output']['output_video']
+#         print(f"Lip-sync video URL: {video_url}")
+        
+#         # Download and save the video
+#         video_data = requests.get(video_url).content
+#         with open("output_video.mp4", "wb") as f:
+#             f.write(video_data)
+#         print("Lip-sync video saved as output_video.mp4")
+#     else:
+#         print(f"Error {response.status_code}: {response.text}")
+
+# def main():
+#     # Input text for the TTS
+#     input_text = "This is the text I want the face to speak"
+
+#     # Perform lip sync with text-to-speech using Gooey.AI
+#     perform_lipsync_tts(input_text)
+
+# if __name__ == "__main__":
+#     main()
